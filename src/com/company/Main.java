@@ -18,39 +18,41 @@ public class Main {
                 "répétitions possibles] en moins de 10 coups ?\n" +
                 "Entrez les 4 chiffres de votre proposition:\n");
 
-        demanderCoup();
+        demanderCoup(laCombinaison);
         tirerCombinaison(uneCombinaison);
 
+        for (int i = 0; i < uneCombinaison.length; i++) {
+            byte win = 0;
+            if(uneCombinaison[i] == laCombinaison[i]){
+                System.out.print("#");
+                win++;
+            }else{
+                System.out.print("O");
+            }
+        }
 
 
-
-//        for (int a : uneCombinaison) {
-//            System.out.print("combinaison est : " + a);
-//        }
-
-//        if(checkRange()){
-//
-//        }
 
     }
 
-    static void demanderCoup(){
+    static void demanderCoup(int[] laCombinaison){
         Scanner sc = new Scanner(System.in);
         for (int j = 0; j < 4; j++) {
             laCombinaison[j] = sc.nextInt();
+            if(!checkRange(laCombinaison[j])){
+                System.out.println("Not in range");
+                System.exit(1);
+            }
         }
     }
 
-//    static boolean checkRange(){
-//        boolean inRange = true;
-//        for (int i = 0; i < 4; i++) {
-//            if(laCombinaison[i] < n || laCombinaison[i] > m){
-//                inRange = false;
-//                break;
-//            }
-//        }
-//        return inRange;
-//    }
+    static boolean checkRange(int chiffre){
+        if(chiffre< n || chiffre > m){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     static void tirerCombinaison(int[] uneCombinaison){
         for (int i = 0; i < 4; i++) {
