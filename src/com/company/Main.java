@@ -1,62 +1,68 @@
 package com.company;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
-    static int n, m;
-    static int[] laCombinaison = new int[4];
-    static int[] uneCombinaison = new int[4];
+    static int n = 1, m = 6;
+    static ArrayList<Integer> laCombinaison = new ArrayList<>();
+    static ArrayList<Integer> uneCombinaison = new ArrayList<>();
+    static int hashtagCtr = 1;
+
+
 
     public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("n : ");   n = sc.nextInt();
-        System.out.print("m : ");   m = sc.nextInt();
         System.out.print("Pourrez vous trouver ma combinaison de 4 " +
-                "chiffres [compris entre "+n+" et "+m+" avec\n" +
-                "répétitions possibles] en moins de 10 coups ?\n" +
-                "Entrez les 4 chiffres de votre proposition:\n");
+                "chiffres [compris entre "+ n +" et " + m + " avec\n" +
+                "répétitions possibles] en moins de 10 coups ?\n");
 
-        demanderCoup(laCombinaison);
         tirerCombinaison(uneCombinaison);
+        for (Integer a:uneCombinaison
+             ) {
+            System.out.print(a);
 
-        for (int i = 0; i < uneCombinaison.length; i++) {
-            byte win = 0;
-            if(uneCombinaison[i] == laCombinaison[i]){
-                System.out.print("#");
-                win++;
-            }else{
-                System.out.print("O");
-            }
         }
 
+        byte counter = 0;
+        while(hashtagCtr < 4) {
+            System.out.println("\nEntrez les 4 chiffres de votre proposition:");
+            demanderCoup(laCombinaison);
 
+            for (int i = 0; i < 4; i++) {
+                if(laCombinaison.get(i) == uneCombinaison.get(i)){
+                    System.out.print("#");
+                    hashtagCtr++;
 
-    }
+                }
+            }
 
-    static void demanderCoup(int[] laCombinaison){
-        Scanner sc = new Scanner(System.in);
-        for (int j = 0; j < 4; j++) {
-            laCombinaison[j] = sc.nextInt();
-            if(!checkRange(laCombinaison[j])){
-                System.out.println("Not in range");
+            counter++;
+            if(counter > 10){
+                System.out.println("Désolé vous n'avez pas trouvé...\n" +
+                        "La bonne réponse était ");
                 System.exit(1);
             }
         }
+        System.out.println("\nBravo ! Vous avez trouvé en "+ counter +" coups\n");
+
+
+
     }
 
-    static boolean checkRange(int chiffre){
-        if(chiffre< n || chiffre > m){
-            return false;
-        }else{
-            return true;
+    static void demanderCoup(ArrayList<Integer> laCombinaison){
+        Scanner sc = new Scanner(System.in);
+        laCombinaison.clear();
+        for (int i = 0; i < 4; i++) {
+            laCombinaison.add(sc.nextInt());
         }
     }
 
-    static void tirerCombinaison(int[] uneCombinaison){
-        for (int i = 0; i < 4; i++) {
-            uneCombinaison[i] = hasard(m);
+
+    static void tirerCombinaison(ArrayList<Integer> uneCombinaison){
+        int a = 0;
+        while (a < 4){
+            uneCombinaison.add(hasard(m));
+            a++;
         }
     }
 
